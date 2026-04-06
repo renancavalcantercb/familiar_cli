@@ -74,6 +74,7 @@ func runXP() {
 	if leveledUp {
 		bar := xp.ProgressBar(s.XP, s.XPToNext)
 		fmt.Printf("\n✨ %s %s leveled up to Lv.%d! %s\n", s.Emoji, s.Name, s.Level, bar)
+		fmt.Printf("   \"%s\"\n", speech.GetLevelUp(s.Species))
 		fmt.Printf("   🎰 +1 roll available! (%d total)\n", s.Rolls)
 	}
 

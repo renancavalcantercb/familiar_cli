@@ -80,6 +80,15 @@ PS1='$(familiar prompt) $ '
 
 ---
 
+## Autocomplete
+
+### Fish
+```sh
+cp completions/familiar.fish ~/.config/fish/completions/
+```
+
+---
+
 ## Commands
 
 | Command | Description |
@@ -92,6 +101,9 @@ PS1='$(familiar prompt) $ '
 | `familiar roll` | Spend a roll — drop a new species or cosmetic |
 | `familiar inventory` | View your collection |
 | `familiar switch <species>` | Switch your active familiar |
+| `familiar rename <name>` | Rename your familiar |
+| `familiar export` | Print a shareable ASCII card |
+| `familiar version` | Show version |
 
 ---
 

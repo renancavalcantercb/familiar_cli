@@ -5,6 +5,9 @@ import (
 	"os"
 )
 
+// Version is the current CLI version.
+const Version = "0.1.0"
+
 func Execute() {
 	if len(os.Args) < 2 {
 		printHelp()
@@ -30,6 +33,12 @@ func Execute() {
 		runInventory()
 	case "stats":
 		runStats()
+	case "rename":
+		runRename()
+	case "export":
+		runExport()
+	case "version", "--version", "-v":
+		fmt.Printf("familiar version %s\n", Version)
 	case "help", "--help", "-h":
 		printHelp()
 	default:
@@ -55,6 +64,9 @@ Commands:
   switch <species_id>     Switch your active familiar (must be in inventory)
   inventory               List unlocked species and hats
   stats                   Show usage statistics
+  rename <name>           Rename your familiar
+  export                  Print a shareable ASCII card
+  version                 Show version
   help                    Show this help
 
 Examples:
@@ -66,5 +78,7 @@ Examples:
   familiar switch mushroom
   familiar inventory
   familiar stats
+  familiar rename Sporos
+  familiar export | pbcopy
 `)
 }

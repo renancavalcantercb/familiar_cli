@@ -5,6 +5,17 @@ import (
 	"strings"
 )
 
+var levelUpLines = map[string][]string{
+	"capybara": {"still here. still growing.", "patience rewarded.", "level up. calm.", "another level. same vibes."},
+	"mushroom": {"the mycelium expands.", "new spores released.", "deeper roots.", "growth is inevitable."},
+	"ghost":    {"ascending... or descending?", "more undefined behavior unlocked.", "leveled up. still haunting.", "void expanded."},
+	"dragon":   {"POWER INCREASES.", "THE FLAME GROWS.", "ANOTHER LEVEL. BOW.", "UNSTOPPABLE."},
+	"axolotl":  {"regenerated to new level.", "chaos leveled up.", "bloop bloop bloop.", "~leveled~"},
+	"duck":     {"QUAK QUAK QUAK.", "level up. quak.", "rubber duck approves.", "PROMOTED. QUAK."},
+	"cat":      {"...fine.", "leveled up. still unimpressed.", "whatever.", "*yawns*"},
+	"owl":      {"wisdom deepens.", "hoot. knowledge grows.", "another level of understanding.", "hoot hoot."},
+}
+
 var lines = map[string]map[string][]string{
 	"capybara": {
 		"devops":  {"it's running.", "cluster is chill.", "deploy done. calm.", "uptime is peace."},
@@ -78,6 +89,15 @@ func classify(cmd string, exitCode int) string {
 	default:
 		return "default"
 	}
+}
+
+// GetLevelUp returns a random level-up speech line for the given species.
+func GetLevelUp(species string) string {
+	l, ok := levelUpLines[species]
+	if !ok {
+		l = levelUpLines["capybara"]
+	}
+	return l[rand.Intn(len(l))]
 }
 
 // Get returns a random speech line for the given species and command context.
