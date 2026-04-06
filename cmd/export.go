@@ -60,14 +60,25 @@ func runExport() {
 	fmt.Println("copied to clipboard? use: familiar export | pbcopy")
 }
 
-func printCardLine(content string, width int) {
-	// width includes the two border chars ║ ... ║
-	inner := width - 2
-	// Pad or truncate content to inner width
-	runes := []rune(content)
-	if len(runes) > inner {
-		runes = runes[:inner]
+// visualWidth returns the display width of a string, counting wide chars (emojis, CJK) as 2.
+func visualWidth(s string) int {
+	w := 0
+	for _, r := range s {
+		if r >= 0x1F000 || (r >= 0x2E80 && r <= 0x9FFF) || (r >= 0xAC00 && r <= 0xD7AF) {
+			w += 2
+		} else {
+			w++
+		}
 	}
-	padding := inner - len(runes)
-	fmt.Printf("║%s%s║\n", string(runes), strings.Repeat(" ", padding))
+	return w
+}
+
+func printCardLine(content string, width int) {
+	inner := width - 2
+	vw := visualWidth(content)
+	padding := inner - vw
+	if padding < 0 {
+		padding = 0
+	}
+	fmt.Printf("║%s%s║\n", content, strings.Repeat(" ", padding))
 }
