@@ -10,7 +10,7 @@ import (
 	"github.com/renancavalcantercb/familiar_cli/internal/xp"
 )
 
-const cardWidth = 36
+const cardWidth = 44
 
 func runExport() {
 	s, err := state.Load()
@@ -74,9 +74,20 @@ func runExport() {
 func visualWidth(s string) int {
 	w := 0
 	for _, r := range s {
-		if r >= 0x1F000 || (r >= 0x2E80 && r <= 0x9FFF) || (r >= 0xAC00 && r <= 0xD7AF) {
+		switch {
+		case r >= 0x1F000:
+			// Emoji blocks (includes ✨ 0x2728 is below, handled separately)
 			w += 2
-		} else {
+		case r >= 0x2600 && r <= 0x27FF:
+			// Misc symbols, dingbats — includes ✨ (U+2728)
+			w += 2
+		case r >= 0x2E80 && r <= 0x9FFF:
+			// CJK
+			w += 2
+		case r >= 0xAC00 && r <= 0xD7AF:
+			// Hangul
+			w += 2
+		default:
 			w++
 		}
 	}
