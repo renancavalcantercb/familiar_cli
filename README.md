@@ -1,169 +1,251 @@
-# familiar
+# familiar 🐾
 
-A terminal companion/pet that lives in your shell, gains XP as you work, and evolves over time — like a familiar from an RPG.
+A terminal companion that lives in your shell, gains XP as you work, and evolves over time — like a familiar from an RPG.
 
 ```
-🦦 Nim Lv.3 ▓▓▓░░ 42xp
-$ _
+🍄 Trufa Lv.5 ▓▓░░░ 35xp ❯
 ```
 
-## What is it?
+Every command you run gives your familiar experience. Deploy to Kubernetes? Big XP. Hit `ls`? Tiny XP. Make an error? +5 suffering XP. Level up, unlock new species through gacha rolls, and collect them all.
 
-Every time you run a command, your familiar gains experience. Different tools give different multipliers (because `git commit` takes more brain than `ls`). Level up by using your terminal. Max level: 10.
+---
 
-## Installation
+## Install
 
 ```sh
-go install github.com/renan-dev/familiar@latest
+go install github.com/renancavalcantercb/familiar_cli@latest
 ```
 
 Or build from source:
 
 ```sh
-git clone https://github.com/renan-dev/familiar
-cd familiar
+git clone https://github.com/renancavalcantercb/familiar_cli
+cd familiar_cli
 go build -o familiar .
-sudo mv familiar /usr/local/bin/
+mv familiar ~/bin/  # anywhere in your $PATH
 ```
 
-## Setup
+**Requirements:** Go 1.21+, no external dependencies.
 
-### Initialize your familiar
+---
+
+## Quick start
 
 ```sh
-familiar init
+familiar init      # summon your familiar (deterministic — same machine = same familiar)
+familiar status    # see your companion
 ```
 
-Your familiar is generated deterministically from your `username@hostname` — you always get the same species and name on the same machine.
+---
 
-### Fish shell hooks
+## Shell integration
+
+### Fish
 
 Add to `~/.config/fish/config.fish`:
 
 ```fish
-# Register XP after each command (runs in background so it never delays your prompt)
+# Award XP after every command (background, never delays prompt)
 function fish_postexec --on-event fish_postexec
-    familiar xp $argv[1] $status &
-end
-
-# Show your familiar in the prompt
-function fish_prompt
-    set -l familiar_line (familiar prompt 2>/dev/null)
-    if test -n "$familiar_line"
-        echo $familiar_line
-    end
-    echo "❯ "
+    $HOME/bin/familiar xp $argv[1] $status &
+    disown
 end
 ```
 
-### Minimal prompt (just the familiar line)
+### Starship prompt
 
-```fish
-function fish_prompt
-    echo (familiar prompt 2>/dev/null)
-    echo "$ "
-end
+Add to `~/.config/starship.toml`:
+
+```toml
+format = """
+... your other modules ...
+$line_break\
+${custom.familiar}\
+❯ """
+
+[custom.familiar]
+command = "$HOME/bin/familiar prompt"
+when = "true"
+format = "[$output ](fg:#c4a7e7)"
+shell = ["bash", "--noprofile", "--norc"]
 ```
+
+### Zsh / Bash
+
+```sh
+# ~/.zshrc or ~/.bashrc
+preexec() { familiar xp "$1" & }
+PS1='$(familiar prompt) $ '
+```
+
+---
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `familiar init` | Create your familiar (deterministic by username+hostname) |
-| `familiar status` | Show your familiar with ASCII art and full stats |
-| `familiar prompt` | Return a short string for the shell prompt |
+| `familiar init` | Summon your familiar |
+| `familiar status` | Full stats with ASCII art |
+| `familiar prompt` | Short string for shell prompt |
 | `familiar xp <cmd> [exit_code]` | Register a command and award XP |
-| `familiar daemon` | Run the background keeper process |
+| `familiar stats` | XP breakdown by category + activity |
+| `familiar roll` | Spend a roll — drop a new species or cosmetic |
+| `familiar inventory` | View your collection |
+| `familiar switch <species>` | Switch your active familiar |
 
-## XP System
+---
+
+## XP system
 
 | Category | Commands | Multiplier |
 |----------|----------|------------|
-| DevOps | `git`, `kubectl`, `terraform`, `docker` | 3× |
-| Build | `go`, `python`, `cargo`, `npm`, `make` | 2× |
-| Editor | `vim`, `nvim`, `nano`, `emacs` | 1.5× |
-| Shell | `cd`, `ls`, `echo`, `cat` | 0.5× |
-| Other | everything else | 1× |
+| DevOps | `git`, `kubectl`, `terraform`, `docker` | **3×** |
+| Build | `go`, `python`, `cargo`, `npm`, `make` | **2×** |
+| Editor | `vim`, `nvim`, `nano`, `emacs`, `hx` | **1.5×** |
+| Shell | `cd`, `ls`, `echo`, `cat` | **0.5×** |
+| Other | everything else | **1×** |
 
-**Error bonus:** any command with exit code ≠ 0 gives +5 XP ("learning by suffering").
+- Base XP per command: **10**
+- Error bonus (exit ≠ 0): **+5 XP** *(learning by suffering)*
+- Level up every **100 XP** — max level **10**
+- Each level up grants **1 roll** 🎰
 
-Base XP per command: **10**. Level up every **100 XP**. Max level: **10**.
+---
 
 ## Species
 
+Each species is generated **deterministically** from your `username@hostname` — you always hatch the same familiar on the same machine.
+
 | Emoji | Species | Traits |
 |-------|---------|--------|
-| 🦦 | Capivara | PACIÊNCIA, CALMA |
-| 🦎 | Axolote | REGENERAÇÃO, CAOS |
-| 🍄 | Cogumelo | SABEDORIA, VENENO |
-| 👻 | Fantasma | SARCASMO, FURTIVIDADE |
-| 🐉 | Dragão | PODER, CAOS |
-| 🦆 | Pato | DEBUGGING, TEIMOSIA |
-| 🐱 | Gato | INDEPENDÊNCIA, IRONIA |
-| 🦉 | Coruja | SABEDORIA, PACIÊNCIA |
+| 🦦 | Capybara | PATIENCE, CALM |
+| 🦎 | Axolotl | REGENERATION, CHAOS |
+| 🍄 | Mushroom | WISDOM, POISON |
+| 👻 | Ghost | SARCASM, STEALTH |
+| 🐉 | Dragon | POWER, CHAOS |
+| 🦆 | Duck | DEBUGGING, STUBBORNNESS |
+| 🐱 | Cat | INDEPENDENCE, IRONY |
+| 🦉 | Owl | WISDOM, PATIENCE |
 
-## Example output
+Unlock more species through **gacha rolls**. Rare drop: ✨ **shiny** variants.
+
+---
+
+## Gacha
+
+Spend rolls earned from leveling up:
+
+```
+❯ familiar roll
+
+🎰 rolling...
+
+  ╔═══════════╗
+  ║  dropped! ║
+  ╚═══════════╝
+
+🐉 Dragon — new familiar unlocked! (use: familiar switch dragon)
+```
+
+Drop rates:
+- **60%** — cosmetic hat (🎩 👒 ⛑️ 🪖 👑 🎓 🧢 🪄)
+- **30%** — new species
+- **10%** — ✨ shiny species
+
+---
+
+## Speech
+
+Your familiar occasionally comments on what you're doing. Each species has its own personality:
+
+```
+❯ kubectl get pods
+NAME                    READY   STATUS
+...
+
+  🍄 Trufa: the cluster knows.
+```
+
+```
+❯ git push origin main --force  # exit 1
+
+  🐉 Ignis: UNACCEPTABLE.
+```
+
+---
+
+## Status output
 
 ```
 familiar status
 
-  /\_/\
- ( o.o )
-  > ^ <
-   gato
+   _( )_
+  (  *  )
+   |   |
+  mushroom
 
 ─────────────────────────────
-  🐱  Pixel
-  Species:   Gato
-  Traits:    INDEPENDÊNCIA, IRONIA
-  Level:     3 / 10
-  XP:        ▓▓▓░░  42 / 100
-  Commands:  156
+  🍄  Trufa
+  Species:   Mushroom
+  Traits:    WISDOM, POISON
+  Level:     5 / 10
+  XP:        ▓▓░░░  35 / 100
+  Commands:  312
   Born:      2026-04-05
 ─────────────────────────────
 
   Attributes:
-    independence    ██████████ 10
-    irony           ████████░░ 8
+    wisdom          █████████░ 9
+    poison          ██████░░░░ 6
 ```
+
+---
+
+## Stats
+
+```
+familiar stats
+
+📊 Trufa — Stats
+
+  Total commands:  312
+  Total XP earned: 2840
+  Days active:     4
+
+  XP by category:
+    devops  ████████░░  1420xp
+    build   █████░░░░░   890xp
+    misc    ███░░░░░░░   380xp
+    editor  ██░░░░░░░░   150xp
+
+  Familiar:   🍄 Trufa Lv.5
+  Rolls left: 2
+  Collection: 3/8 species
+```
+
+---
 
 ## Architecture
 
-The prompt integration uses a read-only pattern to stay fast:
-
 ```
-fish_prompt   → reads ~/.familiar/state.json  (<1ms, pure fish)
-fish_postexec → calls familiar xp <cmd> &     (background, non-blocking)
-familiar xp   → updates ~/.familiar/state.json atomically
+fish_prompt    →  reads ~/.familiar/state.json   (<1ms, no subprocess)
+fish_postexec  →  familiar xp <cmd> &            (background, non-blocking)
+familiar xp    →  updates state.json atomically  (tmp + rename, no corruption)
 ```
 
-`familiar daemon` is optional in the MVP — XP is written directly by `familiar xp`. Start it for future event processing:
+State is stored at `~/.familiar/state.json`. No daemon required in the MVP.
 
-```sh
-familiar daemon &
-```
+---
 
 ## Debug mode
 
 ```sh
-FAMILIAR_DEBUG=1 familiar xp "git commit -m fix" 0
-# [familiar] +30xp (3.0x devops) → 72/100 Lv.3
+FAMILIAR_DEBUG=1 familiar xp "kubectl apply -f deploy.yaml" 0
+# [familiar] +30xp (3.0x devops) → 65/100 Lv.3
 ```
 
-## State file
+---
 
-Located at `~/.familiar/state.json`:
+## License
 
-```json
-{
-  "species": "gato",
-  "emoji": "🐱",
-  "name": "Pixel",
-  "level": 3,
-  "xp": 42,
-  "xp_to_next": 100,
-  "attributes": {"independence": 10, "irony": 8},
-  "total_commands": 156,
-  "created_at": "2026-04-05T00:00:00Z"
-}
-```
+MIT
