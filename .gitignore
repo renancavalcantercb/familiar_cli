@@ -1,0 +1,18 @@
+# Binary
+familiar
+
+# Go build cache
+*.test
+*.out
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# State data
+~/.familiar/
