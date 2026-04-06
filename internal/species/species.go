@@ -85,11 +85,11 @@ chaos salamander
 		EvolvedName:   "Mycelium Lord",
 		EvolvedTraits: []string{"ANCIENT WISDOM", "TOXIC MASTERY"},
 		EvolvedArt: `
-    ___(___)___
-   (   * * *   )
-    |  |   |  |
-    |  |   |  |
-  mycelium lord
+___(___)___
+(* * * * *)
+| |     | |
+| |     | |
+mycelium lord
 `,
 	},
 	{

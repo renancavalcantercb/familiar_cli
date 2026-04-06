@@ -54,8 +54,26 @@ func runExport() {
 	fmt.Printf("╠%s╣\n", border)
 	printCardLine("", cardWidth)
 
+	// Find minimum indentation across non-empty lines to normalize art alignment
+	minIndent := 999
 	for _, line := range asciiLines {
-		printCardLine("  "+line, cardWidth)
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		indent := len(line) - len(strings.TrimLeft(line, " \t"))
+		if indent < minIndent {
+			minIndent = indent
+		}
+	}
+	if minIndent == 999 {
+		minIndent = 0
+	}
+	for _, line := range asciiLines {
+		normalized := line
+		if len(line) >= minIndent {
+			normalized = line[minIndent:]
+		}
+		printCardLine("  "+normalized, cardWidth)
 	}
 
 	printCardLine("", cardWidth)
