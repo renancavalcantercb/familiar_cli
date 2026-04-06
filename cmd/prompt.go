@@ -17,5 +17,9 @@ func runPrompt() {
 	state.MigrateState(s) //nolint:errcheck
 
 	bar := xp.ProgressBar(s.XP, s.XPToNext)
-	fmt.Printf("%s %s Lv.%d %s %dxp", s.Emoji, s.Name, s.Level, bar, s.XP)
+	prefix := ""
+	if s.Evolved {
+		prefix = "✨"
+	}
+	fmt.Printf("%s%s %s Lv.%d %s %dxp", prefix, s.Emoji, s.Name, s.Level, bar, s.XP)
 }

@@ -5,6 +5,17 @@ import (
 	"strings"
 )
 
+var evolveLines = map[string]string{
+	"capybara": "stillness achieved. i am everything.",
+	"mushroom": "the mycelium expands beyond comprehension.",
+	"ghost":    "i have transcended the void.",
+	"dragon":   "I AM THE ELDER FLAME. BOW.",
+	"axolotl":  "chaos... perfected.",
+	"duck":     "QUAK. I KNOW ALL BUGS. QUAK.",
+	"cat":      "...whatever. i was always this.",
+	"owl":      "all is known. all is understood.",
+}
+
 var levelUpLines = map[string][]string{
 	"capybara": {"still here. still growing.", "patience rewarded.", "level up. calm.", "another level. same vibes."},
 	"mushroom": {"the mycelium expands.", "new spores released.", "deeper roots.", "growth is inevitable."},
@@ -89,6 +100,14 @@ func classify(cmd string, exitCode int) string {
 	default:
 		return "default"
 	}
+}
+
+// GetEvolve returns the evolution speech line for the given species.
+func GetEvolve(species string) string {
+	if line, ok := evolveLines[species]; ok {
+		return line
+	}
+	return "i have evolved."
 }
 
 // GetLevelUp returns a random level-up speech line for the given species.

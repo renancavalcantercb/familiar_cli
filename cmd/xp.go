@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/renancavalcantercb/familiar_cli/internal/species"
 	"github.com/renancavalcantercb/familiar_cli/internal/speech"
 	"github.com/renancavalcantercb/familiar_cli/internal/state"
 	"github.com/renancavalcantercb/familiar_cli/internal/xp"
@@ -66,12 +67,21 @@ func runXP() {
 		s.Rolls++
 	}
 
+	// Trigger evolution at max level
+	evolved := false
+	if newLevel >= xp.MaxLevel && !s.Evolved {
+		s.Evolved = true
+		evolved = true
+	}
+
 	if err := state.Save(s); err != nil {
 		// Silent fail.
 		os.Exit(0)
 	}
 
-	if leveledUp {
+	if evolved {
+		triggerEvolution(s)
+	} else if leveledUp {
 		bar := xp.ProgressBar(s.XP, s.XPToNext)
 		fmt.Printf("\n✨ %s %s leveled up to Lv.%d! %s\n", s.Emoji, s.Name, s.Level, bar)
 		fmt.Printf("   \"%s\"\n", speech.GetLevelUp(s.Species))
@@ -123,4 +133,29 @@ func containsStr(slice []string, val string) bool {
 		}
 	}
 	return false
+}
+
+func triggerEvolution(s *state.State) {
+	sp := species.ByID(s.Species)
+	if sp == nil {
+		return
+	}
+
+	evolvedName := sp.EvolvedName
+	evolvedArt := sp.EvolvedArt
+	evolvedTraits := strings.Join(sp.EvolvedTraits, ", ")
+
+	fmt.Println()
+	fmt.Println("✨✨✨ EVOLUTION ✨✨✨")
+	fmt.Println()
+	fmt.Printf("  %s %s is evolving...\n", s.Emoji, s.Name)
+	fmt.Println()
+	fmt.Print(evolvedArt)
+	fmt.Println()
+	fmt.Printf("  %s %s evolved into %s!\n", s.Emoji, s.Name, evolvedName)
+	fmt.Printf("  New traits: %s\n", evolvedTraits)
+	fmt.Println()
+	fmt.Printf("  \"%s\"\n", speech.GetEvolve(s.Species))
+	fmt.Println()
+	fmt.Printf("   🎰 +1 roll available! (%d total)\n", s.Rolls)
 }

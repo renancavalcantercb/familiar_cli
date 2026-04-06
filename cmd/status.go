@@ -25,12 +25,26 @@ func runStatus() {
 
 	bar := xp.ProgressBar(s.XP, s.XPToNext)
 
-	fmt.Print(sp.AsciiArt)
+	art := sp.AsciiArt
+	displayName := sp.Name
+	traits := sp.Traits
+	if s.Evolved {
+		art = sp.EvolvedArt
+		displayName = sp.EvolvedName + " ✨"
+		traits = sp.EvolvedTraits
+	}
+
+	levelStr := fmt.Sprintf("%d / %d", s.Level, xp.MaxLevel)
+	if s.Evolved {
+		levelStr += "  ✨ EVOLVED"
+	}
+
+	fmt.Print(art)
 	fmt.Println("─────────────────────────────")
 	fmt.Printf("  %s  %s\n", s.Emoji, s.Name)
-	fmt.Printf("  Species:   %s\n", sp.Name)
-	fmt.Printf("  Traits:    %s\n", joinTraits(sp.Traits))
-	fmt.Printf("  Level:     %d / %d\n", s.Level, xp.MaxLevel)
+	fmt.Printf("  Species:   %s\n", displayName)
+	fmt.Printf("  Traits:    %s\n", joinTraits(traits))
+	fmt.Printf("  Level:     %s\n", levelStr)
 	fmt.Printf("  XP:        %s  %d / %d\n", bar, s.XP, s.XPToNext)
 	fmt.Printf("  Commands:  %d\n", s.TotalCommands)
 	fmt.Printf("  Born:      %s\n", s.CreatedAt.Format("2006-01-02"))

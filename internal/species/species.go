@@ -2,13 +2,16 @@ package species
 
 // Species defines a familiar species with all its characteristics.
 type Species struct {
-	ID         string
-	Name       string
-	Emoji      string
-	Attributes map[string]int
-	AsciiArt   string
-	Names      []string
-	Traits     []string
+	ID            string
+	Name          string
+	Emoji         string
+	Attributes    map[string]int
+	AsciiArt      string
+	Names         []string
+	Traits        []string
+	EvolvedName   string
+	EvolvedArt    string
+	EvolvedTraits []string
 }
 
 // All contains every available species for the MVP.
@@ -28,7 +31,16 @@ var All = []Species{
   ╰──▀──╯─~
  capybara
 `,
-		Names: []string{"Nim", "Kapi", "Roux", "Mochi", "Taro", "Zara", "Paca", "Boto"},
+		Names:         []string{"Nim", "Kapi", "Roux", "Mochi", "Taro", "Zara", "Paca", "Boto"},
+		EvolvedName:   "Capybara Elder",
+		EvolvedTraits: []string{"INFINITE PATIENCE", "ZEN MASTER"},
+		EvolvedArt: `
+  ╭───────────╮
+  │  ◕     ◕  │
+  │   ─────   │
+  ╰───────────╯─~~~
+  capybara elder
+`,
 	},
 	{
 		ID:    "axolotl",
@@ -44,7 +56,15 @@ var All = []Species{
   |||||
  axolotl
 `,
-		Names: []string{"Axl", "Wooper", "Gel", "Nix", "Bloop", "Aqua", "Gill", "Regen"},
+		Names:         []string{"Axl", "Wooper", "Gel", "Nix", "Bloop", "Aqua", "Gill", "Regen"},
+		EvolvedName:   "Chaos Salamander",
+		EvolvedTraits: []string{"PURE CHAOS", "ETERNAL REGENERATION"},
+		EvolvedArt: `
+  ~><((°>  ~~~
+  |||||||||
+  ~><((°>
+chaos salamander
+`,
 	},
 	{
 		ID:    "mushroom",
@@ -61,7 +81,16 @@ var All = []Species{
    |   |
   mushroom
 `,
-		Names: []string{"Spore", "Myco", "Fungi", "Shiitake", "Trufa", "Velvet", "Cap", "Hifa"},
+		Names:         []string{"Spore", "Myco", "Fungi", "Shiitake", "Trufa", "Velvet", "Cap", "Hifa"},
+		EvolvedName:   "Mycelium Lord",
+		EvolvedTraits: []string{"ANCIENT WISDOM", "TOXIC MASTERY"},
+		EvolvedArt: `
+    ___(___)___
+   (   * * *   )
+    |  |   |  |
+    |  |   |  |
+  mycelium lord
+`,
 	},
 	{
 		ID:    "ghost",
@@ -79,7 +108,16 @@ var All = []Species{
   '~~~~~'
    ghost
 `,
-		Names: []string{"Shade", "Boo", "Wisp", "Null", "Vex", "Phantom", "Mist", "Void"},
+		Names:         []string{"Shade", "Boo", "Wisp", "Null", "Vex", "Phantom", "Mist", "Void"},
+		EvolvedName:   "Void Entity",
+		EvolvedTraits: []string{"NULL POINTER", "INFINITE STEALTH"},
+		EvolvedArt: `
+   .~~~~.
+  ( o    o )
+  |  ~~~~  |
+   ~~~~~~
+  void entity
+`,
 	},
 	{
 		ID:    "dragon",
@@ -97,7 +135,16 @@ var All = []Species{
    '---'
    dragon
 `,
-		Names: []string{"Ignis", "Vyrn", "Ember", "Drako", "Scorch", "Rex", "Ryu", "Blaze"},
+		Names:         []string{"Ignis", "Vyrn", "Ember", "Drako", "Scorch", "Rex", "Ryu", "Blaze"},
+		EvolvedName:   "Elder Dragon",
+		EvolvedTraits: []string{"GODLIKE POWER", "INFINITE CHAOS"},
+		EvolvedArt: `
+   /\\_____/\
+  ( >  ❤️‍🔥  < )
+   \  ~^~  /
+    ~~~~~
+  elder dragon
+`,
 	},
 	{
 		ID:    "duck",
@@ -115,7 +162,16 @@ var All = []Species{
    '---'
     duck
 `,
-		Names: []string{"Duck", "Quak", "Rubber", "Debug", "Waddler", "Quill", "Pip", "Ducky"},
+		Names:         []string{"Duck", "Quak", "Rubber", "Debug", "Waddler", "Quill", "Pip", "Ducky"},
+		EvolvedName:   "Debug Master",
+		EvolvedTraits: []string{"OMNISCIENT DEBUGGER", "UNSTOPPABLE"},
+		EvolvedArt: `
+    ___
+  <(O  )___
+   ( ._> //
+    ~~~~~
+  debug master
+`,
 	},
 	{
 		ID:    "cat",
@@ -132,7 +188,15 @@ var All = []Species{
   > ^ <
    cat
 `,
-		Names: []string{"Nox", "Pixel", "Byte", "Misty", "Sable", "Zephyr", "Rune", "Kira"},
+		Names:         []string{"Nox", "Pixel", "Byte", "Misty", "Sable", "Zephyr", "Rune", "Kira"},
+		EvolvedName:   "Shadow Cat",
+		EvolvedTraits: []string{"ABSOLUTE INDEPENDENCE", "COSMIC IRONY"},
+		EvolvedArt: `
+  /\_____/\
+ (  -   -  )
+  =( Y )=
+  shadow cat
+`,
 	},
 	{
 		ID:    "owl",
@@ -150,7 +214,16 @@ var All = []Species{
   m   m
    owl
 `,
-		Names: []string{"Hoot", "Sage", "Luna", "Athena", "Orion", "Wren", "Noctua", "Dusk"},
+		Names:         []string{"Hoot", "Sage", "Luna", "Athena", "Orion", "Wren", "Noctua", "Dusk"},
+		EvolvedName:   "Oracle Owl",
+		EvolvedTraits: []string{"OMNISCIENCE", "ETERNAL PATIENCE"},
+		EvolvedArt: `
+   ,~~~~~,
+  (O)   (O)
+  -[beak]-
+  m       m
+  oracle owl
+`,
 	},
 }
 

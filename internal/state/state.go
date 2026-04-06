@@ -32,6 +32,9 @@ type State struct {
 	// Stats tracking
 	XPByCategory map[string]int `json:"xp_by_category"`
 	DaysActive   []string       `json:"days_active"` // YYYY-MM-DD
+
+	// Evolution
+	Evolved bool `json:"evolved"`
 }
 
 // Dir returns the path to ~/.familiar.

@@ -23,16 +23,26 @@ func runExport() {
 	sp := species.ByID(s.Species)
 	var asciiLines []string
 	var traits string
+	var displaySpeciesName string
 	if sp != nil {
-		raw := strings.TrimSpace(sp.AsciiArt)
-		// Remove last line (species label baked into art)
+		rawArt := sp.AsciiArt
+		labelName := strings.ToLower(sp.Name)
+		displaySpeciesName = sp.Name
+		if s.Evolved {
+			rawArt = sp.EvolvedArt
+			labelName = strings.ToLower(sp.EvolvedName)
+			displaySpeciesName = sp.EvolvedName + " ✨"
+			traits = strings.Join(sp.EvolvedTraits, ", ")
+		} else {
+			traits = strings.Join(sp.Traits, ", ")
+		}
+		raw := strings.TrimSpace(rawArt)
 		allLines := strings.Split(raw, "\n")
-		// Drop trailing label line if it's just the species name
-		for len(allLines) > 0 && strings.TrimSpace(allLines[len(allLines)-1]) == strings.ToLower(sp.Name) {
+		// Drop trailing label line if it matches the species name
+		for len(allLines) > 0 && strings.TrimSpace(allLines[len(allLines)-1]) == labelName {
 			allLines = allLines[:len(allLines)-1]
 		}
 		asciiLines = allLines
-		traits = strings.Join(sp.Traits, ", ")
 	}
 
 	bar := xp.ProgressBar(s.XP, s.XPToNext)
@@ -49,7 +59,7 @@ func runExport() {
 	}
 
 	printCardLine("", cardWidth)
-	printCardLine(fmt.Sprintf("  %s %s  •  %s", s.Emoji, s.Name, sp.Name), cardWidth)
+	printCardLine(fmt.Sprintf("  %s %s  •  %s", s.Emoji, s.Name, displaySpeciesName), cardWidth)
 	printCardLine(fmt.Sprintf("  Lv.%d  •  %s", s.Level, traits), cardWidth)
 	printCardLine(fmt.Sprintf("  %s  %d/%d XP", bar, s.XP, s.XPToNext), cardWidth)
 	printCardLine(fmt.Sprintf("  %d commands  •  %d days active", s.TotalCommands, daysActive), cardWidth)
