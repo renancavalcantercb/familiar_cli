@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/renan-dev/familiar/cmd"
+	"github.com/renancavalcantercb/familiar_cli/cmd"
 )
 
 func main() {

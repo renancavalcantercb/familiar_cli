@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/renan-dev/familiar/internal/state"
-	"github.com/renan-dev/familiar/internal/xp"
+	"github.com/renancavalcantercb/familiar_cli/internal/state"
+	"github.com/renancavalcantercb/familiar_cli/internal/xp"
 )
 
 func runPrompt() {

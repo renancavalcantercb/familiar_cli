@@ -3,7 +3,7 @@ package gacha
 import (
 	"math/rand"
 
-	"github.com/renan-dev/familiar/internal/species"
+	"github.com/renancavalcantercb/familiar_cli/internal/species"
 )
 
 var hats = []string{"🎩", "👒", "⛑️", "🪖", "👑", "🎓", "🧢", "🪄"}

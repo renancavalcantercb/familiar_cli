@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/renan-dev/familiar/internal/gacha"
-	"github.com/renan-dev/familiar/internal/species"
-	"github.com/renan-dev/familiar/internal/state"
+	"github.com/renancavalcantercb/familiar_cli/internal/gacha"
+	"github.com/renancavalcantercb/familiar_cli/internal/species"
+	"github.com/renancavalcantercb/familiar_cli/internal/state"
 )
 
 func runRoll() {

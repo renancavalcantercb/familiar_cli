@@ -1,3 +1,3 @@
-module github.com/renan-dev/familiar
+module github.com/renancavalcantercb/familiar_cli
 
 go 1.21

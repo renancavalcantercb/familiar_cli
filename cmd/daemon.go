@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/renan-dev/familiar/internal/state"
+	"github.com/renancavalcantercb/familiar_cli/internal/state"
 )
 
 func runDaemon() {

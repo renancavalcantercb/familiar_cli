@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/renan-dev/familiar/internal/speech"
-	"github.com/renan-dev/familiar/internal/state"
-	"github.com/renan-dev/familiar/internal/xp"
+	"github.com/renancavalcantercb/familiar_cli/internal/speech"
+	"github.com/renancavalcantercb/familiar_cli/internal/state"
+	"github.com/renancavalcantercb/familiar_cli/internal/xp"
 )
 
 func runXP() {
