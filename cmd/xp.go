@@ -35,6 +35,7 @@ func runXP() {
 		// Silent fail — must never break the shell.
 		os.Exit(0)
 	}
+	state.MigrateState(s) //nolint:errcheck
 
 	gained := xp.Earned(cmd, exitCode)
 	newXP, newLevel, leveledUp := xp.Apply(s.XP, s.Level, gained)

@@ -63,7 +63,7 @@ Examples:
   familiar prompt
   familiar xp "git commit -m fix" 0
   familiar roll
-  familiar switch cogumelo
+  familiar switch mushroom
   familiar inventory
   familiar stats
 `)

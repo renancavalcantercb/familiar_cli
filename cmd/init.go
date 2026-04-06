@@ -16,6 +16,7 @@ func runInit() {
 	if state.Exists() {
 		s, err := state.Load()
 		if err == nil {
+			state.MigrateState(s) //nolint:errcheck
 			fmt.Printf("You already have a familiar: %s %s (Lv.%d)\n", s.Emoji, s.Name, s.Level)
 			fmt.Println("Use 'familiar status' to see them.")
 			return

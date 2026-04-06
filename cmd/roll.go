@@ -136,6 +136,7 @@ func runInventory() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	state.MigrateState(s) //nolint:errcheck
 
 	fmt.Println()
 	fmt.Printf("📦 %s's Collection\n", s.Name)
@@ -174,25 +175,6 @@ func runInventory() {
 
 	fmt.Printf("\n  Rolls available: %d\n", s.Rolls)
 	fmt.Println()
-}
-
-// normalizeSpeciesID maps common typos/aliases to canonical IDs.
-func normalizeSpeciesID(id string) string {
-	aliases := map[string]string{
-		"dragon":   "dragao",
-		"dragão":   "dragao",
-		"ghost":    "fantasma",
-		"mushroom": "cogumelo",
-		"axolotl":  "axolote",
-		"duck":     "pato",
-		"cat":      "gato",
-		"owl":      "coruja",
-		"capybara": "capivara",
-	}
-	if canonical, ok := aliases[id]; ok {
-		return canonical
-	}
-	return id
 }
 
 func countBaseSpecies(inventory []string) int {

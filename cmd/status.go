@@ -15,6 +15,7 @@ func runStatus() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	state.MigrateState(s) //nolint:errcheck
 
 	sp := species.ByID(s.Species)
 	if sp == nil {

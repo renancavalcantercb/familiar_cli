@@ -16,6 +16,7 @@ func runStats() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	state.MigrateState(s) //nolint:errcheck
 
 	totalXP := 0
 	for _, v := range s.XPByCategory {
